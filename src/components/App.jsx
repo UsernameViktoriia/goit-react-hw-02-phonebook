@@ -22,30 +22,23 @@ export class App extends React.Component {
     );
   };
   onAddContact = ({ name, number }) => {
-    const contact = {
-      id: nanoid(),
-      name: name,
-      number: number,
-    };
     if (
       this.state.contacts.find(
-        cont => cont.name.toLowerCase() === contact.name.toLowerCase()
+        cont => cont.name.toLowerCase() === name.toLowerCase()
       )
     ) {
-      return alert(`${contact.name} is already in contacts`);
+      return alert(`${name} is already in contacts`);
     }
     this.setState(prevState => {
       return {
-        contacts: [...prevState.contacts, contact],
+        contacts: [...prevState.contacts, { name, number, id: nanoid() }],
       };
     });
   };
   onDelete = contactId => {
     this.setState(prevState => {
       return {
-        contacts: prevState.contacts.filter(
-          contact => contact.id !== contactId
-        ),
+        contacts: prevState.contacts.filter(({ id }) => id !== contactId),
       };
     });
   };
